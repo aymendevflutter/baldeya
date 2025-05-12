@@ -109,10 +109,10 @@ class RubriqueList extends StatelessWidget {
         final children =
             allRubriques.where((r) => r.parentId == rubrique.id).toList();
         return Card(
-          margin: EdgeInsets.only(bottom: 16),
-          elevation: 4,
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: InkWell(
             onTap: () {
@@ -137,36 +137,36 @@ class RubriqueList extends StatelessWidget {
                 );
               }
             },
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                    Theme.of(context).colorScheme.secondary.withOpacity(0.05),
-                  ],
-                ),
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
                     Container(
-                      width: 60,
-                      height: 60,
+                      width: 56,
+                      height: 56,
                       decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
                             .primary
                             .withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
                         iconData,
-                        size: 30,
+                        size: 28,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
@@ -177,13 +177,13 @@ class RubriqueList extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: isArabic ? 'Cairo' : null,
-                                ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[800],
+                              fontFamily: isArabic ? 'Cairo' : null,
+                              height: 1.3,
+                            ),
                             textDirection: isArabic
                                 ? TextDirection.rtl
                                 : TextDirection.ltr,
@@ -193,13 +193,12 @@ class RubriqueList extends StatelessWidget {
                           SizedBox(height: 4),
                           Text(
                             description,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color: Colors.grey[600],
-                                  fontFamily: isArabic ? 'Cairo' : null,
-                                ),
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey[600],
+                              fontFamily: isArabic ? 'Cairo' : null,
+                              height: 1.4,
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textDirection: isArabic

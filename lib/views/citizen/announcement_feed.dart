@@ -75,30 +75,27 @@ class AnnouncementFeed extends StatelessWidget {
             final String content = announcement.content[lang] ?? '';
             final bool isArabic = lang == 'ar';
             return Card(
-              margin: EdgeInsets.only(bottom: 16),
-              elevation: 4,
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              elevation: 2,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: InkWell(
                 onTap: () {
                   _showAnnouncementDetails(context, announcement, lang);
                 },
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                        Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.05),
-                      ],
-                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,12 +103,12 @@ class AnnouncementFeed extends StatelessWidget {
                       if (announcement.imageUrl != null)
                         ClipRRect(
                           borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(20)),
+                              BorderRadius.vertical(top: Radius.circular(16)),
                           child: Stack(
                             children: [
                               Image.network(
                                 announcement.imageUrl!,
-                                height: 200,
+                                height: 180,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                                 cacheWidth: 800,
@@ -120,23 +117,8 @@ class AnnouncementFeed extends StatelessWidget {
                                     (context, child, loadingProgress) {
                                   if (loadingProgress == null) return child;
                                   return Container(
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                              .withOpacity(0.2),
-                                          Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.1),
-                                        ],
-                                      ),
-                                    ),
+                                    height: 180,
+                                    color: Colors.grey[100],
                                     child: Center(
                                       child: CircularProgressIndicator(
                                         value: loadingProgress
@@ -147,61 +129,56 @@ class AnnouncementFeed extends StatelessWidget {
                                                 loadingProgress
                                                     .expectedTotalBytes!
                                             : null,
+                                        strokeWidth: 2,
                                       ),
                                     ),
                                   );
                                 },
                                 errorBuilder: (context, error, stackTrace) {
-                                  print('Error loading image: $error');
-                                  print('Image URL: ${announcement.imageUrl}');
                                   return Container(
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                              .withOpacity(0.2),
-                                          Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.1),
+                                    height: 180,
+                                    color: Colors.grey[100],
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.error_outline,
+                                              size: 40,
+                                              color: Colors.grey[400]),
+                                          SizedBox(height: 8),
+                                          Text(
+                                            'Error loading image',
+                                            style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontSize: 12,
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.error_outline, size: 50),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Error loading image',
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   );
                                 },
                               ),
                               if (announcement.isUrgent)
                                 Positioned(
-                                  top: 16,
-                                  right: 16,
+                                  top: 12,
+                                  right: 12,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 6,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.red,
+                                      color: Colors.red[400],
                                       borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          blurRadius: 4,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
                                     ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -209,7 +186,7 @@ class AnnouncementFeed extends StatelessWidget {
                                         Icon(
                                           Icons.warning_amber_rounded,
                                           color: Colors.white,
-                                          size: 16,
+                                          size: 14,
                                         ),
                                         SizedBox(width: 4),
                                         Text(
@@ -235,13 +212,13 @@ class AnnouncementFeed extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: isArabic ? 'Cairo' : null,
-                                  ),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[800],
+                                fontFamily: isArabic ? 'Cairo' : null,
+                                height: 1.3,
+                              ),
                               textDirection: isArabic
                                   ? TextDirection.rtl
                                   : TextDirection.ltr,
@@ -251,12 +228,12 @@ class AnnouncementFeed extends StatelessWidget {
                             SizedBox(height: 8),
                             Text(
                               content,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontFamily: isArabic ? 'Cairo' : null,
-                                  ),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                                fontFamily: isArabic ? 'Cairo' : null,
+                                height: 1.5,
+                              ),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               textDirection: isArabic
@@ -265,41 +242,24 @@ class AnnouncementFeed extends StatelessWidget {
                               textAlign:
                                   isArabic ? TextAlign.right : TextAlign.left,
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 12),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Icon(
-                                  Icons.calendar_today,
-                                  size: 16,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  _formatDate(announcement.date),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        fontFamily: 'Cairo',
-                                      ),
-                                ),
-                                Spacer(),
                                 Text(
                                   'اقرأ المزيد',
                                   style: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.primary,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
                                     fontFamily: 'Cairo',
                                   ),
                                 ),
+                                SizedBox(width: 4),
                                 Icon(
-                                  Icons.arrow_forward,
-                                  size: 16,
+                                  Icons.arrow_back_ios_new,
+                                  size: 14,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ],
