@@ -158,16 +158,13 @@ class RubriqueList extends StatelessWidget {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.1),
+                        color: const Color(0xFFE8F5E9),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
                         iconData,
                         size: 28,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Colors.blue[700],
                       ),
                     ),
                     SizedBox(width: 16),

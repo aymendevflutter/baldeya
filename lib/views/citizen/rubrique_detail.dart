@@ -49,18 +49,8 @@ class RubriqueDetail extends StatelessWidget {
           textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           textAlign: isArabic ? TextAlign.right : TextAlign.left,
         ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-              ],
-            ),
-          ),
-        ),
+        backgroundColor: Color(0xFF4FC3F7), // Soft blue
+        flexibleSpace: null,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),

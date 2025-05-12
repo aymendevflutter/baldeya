@@ -103,6 +103,8 @@ class _CitizenAppState extends State<CitizenApp> {
 
   Widget _buildSectionHeader(
       BuildContext context, String title, IconData icon) {
+    final bool isArabic =
+        title.isNotEmpty && RegExp(r'^[\u0600-\u06FF]').hasMatch(title);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -114,19 +116,36 @@ class _CitizenAppState extends State<CitizenApp> {
         ),
       ),
       child: Row(
+        mainAxisAlignment:
+            isArabic ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: Colors.teal,
-          ),
-          SizedBox(width: 8),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal[800],
-                ),
-          ),
+          if (!isArabic) ...[
+            Icon(
+              icon,
+              color: Colors.teal,
+            ),
+            SizedBox(width: 8),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal[800],
+                  ),
+            ),
+          ] else ...[
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal[800],
+                  ),
+            ),
+            SizedBox(width: 8),
+            Icon(
+              icon,
+              color: Colors.teal,
+            ),
+          ]
         ],
       ),
     );
@@ -229,16 +248,11 @@ class _HorizontalRubriqueList extends StatelessWidget {
                         height: 56,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.teal,
-                              Colors.amber,
-                            ],
-                          ),
+                          color: Color(0xFFE8F5E9),
                         ),
                         child: Icon(
                           iconData,
-                          color: Colors.white,
+                          color: Colors.blue[700],
                           size: 32,
                         ),
                       ),
@@ -252,7 +266,8 @@ class _HorizontalRubriqueList extends StatelessWidget {
                                     color: Colors.teal[800],
                                     fontFamily: isArabic ? 'Cairo' : null,
                                   ),
-                          textAlign: TextAlign.center,
+                          textAlign:
+                              isArabic ? TextAlign.right : TextAlign.left,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -267,7 +282,8 @@ class _HorizontalRubriqueList extends StatelessWidget {
                                       color: Colors.teal[900],
                                       fontFamily: isArabic ? 'Cairo' : null,
                                     ),
-                            textAlign: TextAlign.center,
+                            textAlign:
+                                isArabic ? TextAlign.right : TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
