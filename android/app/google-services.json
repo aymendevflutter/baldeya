@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "931356474584",
+    "project_id": "bladeya-45fa8",
+    "storage_bucket": "bladeya-45fa8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931356474584:android:9b4667f8fe4bd9e0d7ebad",
+        "android_client_info": {
+          "package_name": "com.example.baladeyasfax"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmnPAXRd8dmVvV4gVCCYYf-oqrsEeUYtA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931356474584:android:a6a6f6323beefc09d7ebad",
+        "android_client_info": {
+          "package_name": "com.example.baldeya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmnPAXRd8dmVvV4gVCCYYf-oqrsEeUYtA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
