@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, kReleaseMode;
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'app_state.dart';
+import 'views/admin/admin_app.dart';
+import 'views/citizen/citizen_app.dart';
+import 'providers/content_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:device_preview/device_preview.dart';
 import 'firebase_options.dart';
 import 'app_state.dart';
 import 'views/admin/admin_app.dart';
@@ -13,13 +23,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AppState()),
-        ChangeNotifierProvider(create: (context) => ContentProvider()),
-      ],
-      child: MyApp(),
+    DevicePreview(
+      enabled: !kReleaseMode, // Enable only in debug mode
+      builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => AppState()),
+          ChangeNotifierProvider(create: (context) => ContentProvider()),
+        ],
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -29,6 +43,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sfax Baladyti',
+      // DevicePreview configuration
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
@@ -68,7 +85,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: //
-          //   kIsWeb ? AdminApp() :
+          //  kIsWeb ? AdminApp() :
           CitizenApp(),
     );
   }
