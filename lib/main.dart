@@ -10,9 +10,19 @@ import 'providers/content_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  debugPrint('Starting app initialization...');
+
+  bool firebaseInitialized = false;
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    firebaseInitialized = true;
+    debugPrint('Firebase initialized successfully.');
+  } catch (e, stackTrace) {
+    debugPrint('Error initializing Firebase: $e');
+    debugPrint('Stack trace: $stackTrace');
+  }
 
   runApp(
     MultiProvider(
@@ -20,12 +30,16 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AppState()),
         ChangeNotifierProvider(create: (context) => ContentProvider()),
       ],
-      child: MyApp(),
+      child: MyApp(firebaseInitialized: firebaseInitialized),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  final bool firebaseInitialized;
+
+  const MyApp({Key? key, required this.firebaseInitialized}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,7 +82,28 @@ class MyApp extends StatelessWidget {
           fillColor: Colors.grey[50],
         ),
       ),
-      home: CitizenApp(),
+      home: firebaseInitialized ? CitizenApp() : _LoadingScreen(),
+    );
+  }
+}
+
+class _LoadingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16),
+            Text(
+              'Loading...',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
